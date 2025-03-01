@@ -45,7 +45,7 @@
             });
 
             const editor = monaco.editor.create(document.getElementById("editor"), {
-                value: `print("Droomer")`,
+                value: localStorage.getItem("savedLuaCode") || `print("Droomer")`,
                 language: "lua",
                 theme: "custom-dark",
                 fontSize: 16,
@@ -64,6 +64,11 @@
                     horizontalScrollbarSize: 8,
                     alwaysConsumeMouseWheel: false
                 }
+            });
+
+            // Auto-save the editor content
+            editor.onDidChangeModelContent(() => {
+                localStorage.setItem("savedLuaCode", editor.getValue());
             });
 
             // Auto-Completion Provider for Lua & Roblox API
